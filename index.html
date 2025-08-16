@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>hey!</title>
+    <meta name="description" content="Página pessoal minimalista">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E👋%3C/text%3E%3C/svg%3E">
+    <style>
+      :root { --fg:#ffffff; --muted:rgba(255,255,255,0.7); }
+      html,body{ height:100%; }
+      body{
+        margin:0; 
+        background: linear-gradient(135deg, #A8E890, #6DBE45);
+        color:var(--fg); 
+        font: 500 18px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+        display:grid; place-items:center; letter-spacing:0.2px; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      }
+      main{ text-align:center; display:flex; flex-direction:column; gap:24px; }
+      nav{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+      a{ color:var(--fg); text-decoration:none; border:1px solid var(--muted); padding:10px 14px; border-radius:999px; font-weight:600; transition:transform .06s ease, background .2s ease, border-color .2s ease; }
+      a:hover{ transform:translateY(-1px); background:rgba(255,255,255,.15); border-color:var(--fg); }
+      footer{ position:fixed; inset:auto 12px 12px auto; color:var(--muted); font-size:12px; }
+      .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }.avatar-container { position: relative; display: inline-block; }
+  .avatar {
+    width: 180px;
+    height: auto;
+    image-rendering: pixelated; /* estilo pixelado */
+  }
+  .bubble {
+    position: absolute;
+    bottom: 10px;
+    right: -20px;
+    background: #fff;
+    color: #e60023;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    font-size: 18px;
+  }
+</style>
+
+  </head>
+  <body>
+    <a class="sr-only" href="#links">Pular para os links</a>
+    <main>
+      <div class="avatar-container">
+        <img src="avatar.png" alt="meu avatar" class="avatar">
+        <span class="bubble">ei!</span>
+      </div><nav id="links" aria-label="redes sociais">
+    <a href="https://instagram.com/seuusuario" target="_blank">Instagram</a>
+    <a href="https://linkedin.com/in/seuusuario" target="_blank">LinkedIn</a>
+    <a href="https://github.com/seuusuario" target="_blank">Github</a>
+    <a href="https://figma.com/@seuusuario" target="_blank">Figma</a>
+  </nav>
+</main>
+<footer>feito com ♥</footer>
+
+  </body>
+</html>
