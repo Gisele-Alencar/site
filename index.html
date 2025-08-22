@@ -1,112 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estante Solidária</title>
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-  <link
-    rel="stylesheet"
-    as="style"
-    onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800"
-  />
+  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" 
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 </head>
-<body class="bg-gradient-to-b from-pink-50 to-pink-100 font-sans min-h-screen flex flex-col items-center">
+<body class="bg-[#fcf8f9] min-h-screen flex flex-col font-sans">
 
-  <!-- Header -->
-  <header class="w-full flex items-center justify-between px-4 sm:px-10 py-4 border-b border-pink-200">
-    <h1 class="text-2xl sm:text-3xl font-bold text-pink-900">Estante Solidária</h1>
+  <!-- Cabeçalho -->
+  <header class="flex justify-between items-center p-4 border-b border-[#f3e7ea]">
+    <h1 class="text-[#1b0d11] text-xl font-bold">Estante Solidária</h1>
+    <button class="bg-[#f0426d] text-white px-4 py-2 rounded-xl font-bold">Register Book</button>
   </header>
 
-  <!-- Formulário local -->
-  <main class="flex flex-col w-full max-w-[960px] px-4 sm:px-10 mt-6">
-    <h2 class="text-2xl sm:text-3xl font-bold text-pink-900 mb-4">Register Your Book</h2>
+  <!-- Formulário de Cadastro -->
+  <section class="flex flex-col items-center py-6 px-4">
+    <h2 class="text-[#1b0d11] text-2xl font-bold mb-4">Register Your Book</h2>
 
-    <div class="flex flex-col gap-4 w-full max-w-[480px] mx-auto">
-      <input id="titulo" placeholder="Book Title" class="w-full p-4 rounded-xl bg-pink-50 text-pink-900 placeholder-pink-400 h-14 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"/>
-      <input id="estilo" placeholder="Book Style (e.g., Fiction, Children, Technical)" class="w-full p-4 rounded-xl bg-pink-50 text-pink-900 placeholder-pink-400 h-14 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"/>
-      <input id="doador" placeholder="Donor Name" class="w-full p-4 rounded-xl bg-pink-50 text-pink-900 placeholder-pink-400 h-14 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"/>
-      <input id="imagem" placeholder="Book Image URL (optional)" class="w-full p-4 rounded-xl bg-pink-50 text-pink-900 placeholder-pink-400 h-14 focus:outline-none focus:ring-2 focus:ring-pink-300 transition"/>
+    <div class="flex flex-col gap-3 w-full max-w-md">
+      <input id="titulo" placeholder="Book Title" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
+      <select id="estilo" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none">
+        <option value="">Select Book Style</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Children">Children</option>
+        <option value="Technical">Technical</option>
+        <option value="Mystery">Mystery</option>
+      </select>
+      <input id="doador" placeholder="Donor Name" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
+      <input id="imagem" placeholder="Image URL (optional)" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
+      <button id="cadastrar-btn" class="bg-[#f0426d] text-white rounded-xl py-3 font-bold hover:bg-[#e0325c] transition-colors">Register Book</button>
     </div>
+  </section>
 
-    <div class="flex justify-center mt-4">
-      <button id="cadastrar-btn" class="w-full max-w-[480px] bg-pink-500 text-white font-bold py-3 rounded-xl hover:scale-105 transition-transform shadow-lg">
-        Register Book
-      </button>
-    </div>
+  <!-- Livros Registrados -->
+  <section class="flex-1 px-4 pb-6">
+    <h2 class="text-[#1b0d11] text-xl font-bold mb-4">Registered Books</h2>
+    <div id="livros-container" class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4"></div>
+  </section>
 
-    <h2 class="text-xl sm:text-2xl font-bold text-pink-900 mt-8 mb-4">Registered Books</h2>
-
-    <!-- Container de livros -->
-    <div id="livros-container" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
-  </main>
-
-  <!-- JavaScript -->
   <script>
-    const cadastrarBtn = document.getElementById('cadastrar-btn');
-    const livrosContainer = document.getElementById('livros-container');
+    const livros = [];
+    const container = document.getElementById("livros-container");
+    const btnCadastrar = document.getElementById("cadastrar-btn");
 
-    let livros = []; // Array local para testes
+    function atualizarLivros() {
+      container.innerHTML = "";
+      livros.forEach((livro, index) => {
+        const livroDiv = document.createElement("div");
+        livroDiv.className = "flex flex-col gap-2";
 
-    // Cadastro manual de livros
-    cadastrarBtn.addEventListener('click', () => {
-      const titulo = document.getElementById('titulo').value.trim();
-      const estilo = document.getElementById('estilo').value.trim();
-      const doador = document.getElementById('doador').value.trim();
-      const imagem = document.getElementById('imagem').value.trim();
+        livroDiv.innerHTML = `
+          <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" 
+               style='background-image: url("${livro.imagem || "https://via.placeholder.com/150"}")'></div>
+          <div>
+            <p class="text-[#1b0d11] text-base font-medium">${livro.titulo}</p>
+            <p class="text-[#9a4c5f] text-sm">${livro.estilo}</p>
+            <button class="mt-2 w-full bg-[#f0426d] text-white rounded-xl py-1 text-sm font-bold ${livro.reservado ? "opacity-50 cursor-not-allowed" : ""}">
+              ${livro.reservado ? "Reservado" : "Reservar"}
+            </button>
+          </div>
+        `;
 
-      if(titulo && estilo && doador){
-        livros.push({titulo, estilo, doador, imagem, reservadoPor: null});
-        renderLivros();
+        livroDiv.querySelector("button").addEventListener("click", () => {
+          if (!livro.reservado) {
+            livro.reservado = true;
+            atualizarLivros();
+          }
+        });
 
-        document.getElementById('titulo').value = '';
-        document.getElementById('estilo').value = '';
-        document.getElementById('doador').value = '';
-        document.getElementById('imagem').value = '';
+        container.appendChild(livroDiv);
+      });
+    }
+
+    btnCadastrar.addEventListener("click", () => {
+      const titulo = document.getElementById("titulo").value.trim();
+      const estilo = document.getElementById("estilo").value;
+      const doador = document.getElementById("doador").value.trim();
+      const imagem = document.getElementById("imagem").value.trim();
+
+      if (titulo && estilo && doador) {
+        livros.push({ titulo, estilo, doador, imagem, reservado: false });
+        document.getElementById("titulo").value = "";
+        document.getElementById("estilo").value = "";
+        document.getElementById("doador").value = "";
+        document.getElementById("imagem").value = "";
+        atualizarLivros();
       } else {
-        alert('Preencha todos os campos!');
+        alert("Preencha todos os campos obrigatórios!");
       }
     });
 
-    // Renderizar livros
-    function renderLivros(){
-      livrosContainer.innerHTML = '';
-      livros.forEach((livro, idx) => {
-        const reservado = livro.reservadoPor ? true : false;
-
-        const card = document.createElement('div');
-        card.classList.add('flex','flex-col','gap-2','p-3','bg-white','rounded-xl','shadow-lg','hover:shadow-2xl','transition-shadow');
-        card.innerHTML = `
-          <div class="h-32 bg-center bg-cover rounded-xl" style="background-image: url('${livro.imagem || 'https://via.placeholder.com/150'}');"></div>
-          <p class="text-pink-900 font-semibold text-base sm:text-lg">${livro.titulo}</p>
-          <p class="text-pink-500 text-sm sm:text-base">${livro.estilo}</p>
-          <p class="text-pink-500 text-sm sm:text-base">Donor: ${livro.doador}</p>
-          <button class="reservar-btn ${reservado ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-500'} text-white font-bold py-1 px-3 rounded-xl mt-2 hover:scale-105 transition-transform shadow" 
-            data-idx="${idx}" ${reservado ? 'disabled' : ''}>
-            ${reservado ? 'Reservado' : 'Reservar'}
-          </button>
-        `;
-        livrosContainer.appendChild(card);
-      });
-
-      // Adicionar evento aos botões de reserva
-      document.querySelectorAll('.reservar-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const idx = e.target.dataset.idx;
-
-          const nome = prompt("Digite seu nome:");
-          if(!nome) return alert("Reserva cancelada!");
-
-          const email = prompt("Digite seu e-mail:");
-          if(!email) return alert("Reserva cancelada!");
-
-          livros[idx].reservadoPor = { nome, email };
-          renderLivros();
-        });
-      });
-    }
+    atualizarLivros();
   </script>
 
 </body>
