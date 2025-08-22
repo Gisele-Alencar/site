@@ -1,195 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estante Solidária</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of UI/UX Designer Sarah Chen" />
+  <title>Sarah Chen - UI/UX Designer</title>
 
-  <!-- Fonte moderna -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: #333;
-      background: linear-gradient(135deg, #ff8fab, #ffa5d8, #7ad3f7);
-      background-size: 300% 300%;
-      animation: gradientMove 8s ease infinite;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-    }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .container {
-      background: #fff;
-      width: 100%;
-      max-width: 700px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      overflow: hidden;
-    }
-
-    header {
-      background: #333;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-
-    .form-section {
-      background: #ffc1e3;
-      padding: 30px;
-    }
-
-    .form-section h2 {
-      font-size: 1.3rem;
-      margin-bottom: 15px;
-      color: #333;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    input {
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      background: #ff4fa3;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #e13b8b;
-    }
-
-    .list-section {
-      padding: 25px;
-    }
-
-    .list-section h2 {
-      margin-bottom: 15px;
-      color: #ff4fa3;
-      font-size: 1.3rem;
-    }
-
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    li {
-      padding: 15px;
-      background: #f8f8f8;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    li span {
-      font-weight: bold;
-    }
-
-    li .status {
-      font-size: 0.9rem;
-      color: green;
-      font-weight: bold;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      header {
-        font-size: 1.2rem;
-      }
-      .container {
-        max-width: 100%;
-      }
-    }
-
-  </style>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
 </head>
-<body>
-  <div class="container">
-    <header>📚 Estante Solidária</header>
+<body class="bg-[#1b1725] text-white font-sans">
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-[#1b1725]/80 backdrop-blur-md z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+      <h1 class="text-2xl font-bold">Sarah Chen</h1>
+      <nav>
+        <ul class="flex gap-6">
+          <li><a href="#about" class="hover:text-[#8b47eb]">About</a></li>
+          <li><a href="#projects" class="hover:text-[#8b47eb]">Projects</a></li>
+          <li><a href="#contact" class="hover:text-[#8b47eb]">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Formulário -->
-    <section class="form-section">
-      <h2>Cadastre o Livro que Deseja Doar</h2>
-      <form id="formLivro">
-        <input type="text" id="titulo" placeholder="Título do Livro" required>
-        <input type="text" id="autor" placeholder="Autor do Livro" required>
-        <input type="text" id="doador" placeholder="Seu Nome (não será exibido)" required>
-        <button type="submit">Cadastrar Livro</button>
-      </form>
-    </section>
+  <!-- Hero -->
+  <section class="h-screen flex items-center justify-center text-center px-4 bg-gradient-to-b from-[#1b1725] to-[#2f2938]">
+    <div>
+      <h2 class="text-4xl md:text-6xl font-extrabold mb-4">UI/UX Designer</h2>
+      <p class="text-lg md:text-xl text-gray-300 mb-6">Designing beautiful, intuitive, and user-centered experiences.</p>
+      <a href="#projects" class="px-6 py-3 rounded-lg bg-[#8b47eb] font-bold hover:bg-[#732fd6] transition">See My Work</a>
+    </div>
+  </section>
 
-    <!-- Lista de livros -->
-    <section class="list-section">
-      <h2>📖 Livros Disponíveis</h2>
-      <ul id="listaLivros"></ul>
-    </section>
-  </div>
+  <!-- About -->
+  <section id="about" class="max-w-5xl mx-auto py-20 px-6">
+    <h2 class="text-3xl font-bold mb-6 text-center">About Me</h2>
+    <p class="text-center text-gray-300 max-w-3xl mx-auto">
+      Hi, I'm Sarah Chen, a passionate UI/UX Designer with a focus on creating meaningful user experiences through modern, clean, and intuitive design.
+    </p>
+  </section>
 
-  <script>
-    const form = document.getElementById("formLivro");
-    const lista = document.getElementById("listaLivros");
-
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      // pega os valores
-      const titulo = document.getElementById("titulo").value;
-      const autor = document.getElementById("autor").value;
-
-      // cria item
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <div>
-          <span>${titulo}</span> - ${autor}
+  <!-- Projects -->
+  <section id="projects" class="max-w-6xl mx-auto py-20 px-6">
+    <h2 class="text-3xl font-bold mb-12 text-center">Projects</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-[#2f2938] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition">
+        <img src="project1.jpg" alt="Project 1" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">Project One</h3>
+          <p class="text-gray-300">A modern web application designed with user experience in mind.</p>
         </div>
-        <div class="status">Disponível</div>
-      `;
+      </div>
+      <div class="bg-[#2f2938] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition">
+        <img src="project2.jpg" alt="Project 2" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">Project Two</h3>
+          <p class="text-gray-300">Mobile-first design that enhances usability and engagement.</p>
+        </div>
+      </div>
+      <div class="bg-[#2f2938] rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition">
+        <img src="project3.jpg" alt="Project 3" class="w-full h-48 object-cover" />
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">Project Three</h3>
+          <p class="text-gray-300">Interactive dashboard with seamless user flow and clean UI.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      // adiciona na lista
-      lista.appendChild(li);
+  <!-- Contact -->
+  <section id="contact" class="bg-[#2f2938] py-20 px-6">
+    <h2 class="text-3xl font-bold mb-8 text-center">Contact Me</h2>
+    <form action="https://docs.google.com/forms/d/e/SEU_ID_DO_FORM/formResponse" method="POST" target="_blank" class="max-w-lg mx-auto flex flex-col gap-4">
+      <input
+        type="text"
+        name="entry.123456" 
+        placeholder="Your Name"
+        required
+        class="form-input w-full rounded-lg text-white bg-[#1b1725] h-12 p-4 placeholder:text-gray-400 focus:outline-none"
+      />
+      <input
+        type="email"
+        name="entry.654321" 
+        placeholder="Your Email"
+        required
+        class="form-input w-full rounded-lg text-white bg-[#1b1725] h-12 p-4 placeholder:text-gray-400 focus:outline-none"
+      />
+      <textarea
+        name="entry.987654" 
+        placeholder="Your Message"
+        rows="4"
+        required
+        class="form-input w-full rounded-lg text-white bg-[#1b1725] p-4 placeholder:text-gray-400 focus:outline-none"
+      ></textarea>
+      <button type="submit" class="h-12 px-4 rounded-lg bg-[#8b47eb] text-white font-bold hover:bg-[#732fd6] transition">
+        Send
+      </button>
+    </form>
+  </section>
 
-      // limpa o form
-      form.reset();
-    });
-  </script>
+  <!-- Footer -->
+  <footer class="bg-[#1b1725] py-6 text-center text-gray-400">
+    <p>&copy; 2025 Sarah Chen. All rights reserved.</p>
+  </footer>
 </body>
 </html>
