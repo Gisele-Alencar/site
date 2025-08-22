@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estante Solidária</title>
-  <!-- Google Fonts para visual moderno -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -47,6 +46,53 @@
       max-width: 600px;
       padding: 0 1em 2em 1em;
     }
+    /* Cadastro do livro */
+    .form-container {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .form-container label {
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 1.05em;
+      margin-bottom: 6px;
+    }
+    .form-container input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--gray);
+      background: var(--white);
+      font-size: 1em;
+      font-family: inherit;
+      color: var(--dark);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-container input:focus {
+      border-color: var(--accent);
+    }
+    .form-container button {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(255, 79, 139, 0.10);
+    }
+    .form-container button:hover {
+      background: #ff3580;
+    }
+    /* Livros disponíveis */
     .livros-disponiveis {
       margin-bottom: 32px;
     }
@@ -169,6 +215,9 @@
         margin-top: 18px;
         padding: 0 0.5em;
       }
+      .form-container {
+        padding: 18px 8px;
+      }
       .livro-card {
         padding: 12px 6px;
       }
@@ -202,25 +251,25 @@
     <h1>Estante Solidária</h1>
   </header>
   <div class="container">
+    <!-- Formulário para cadastrar livro -->
+    <section class="form-container">
+      <h2>Cadastre o Livro que Deseja Doar</h2>
+      <form id="form-cadastro-livro">
+        <label for="titulo">Título do Livro:</label>
+        <input type="text" id="titulo" name="titulo" required placeholder="Ex: Dom Casmurro">
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required placeholder="Ex: Machado de Assis">
+        <label for="doador">Seu nome (doador):</label>
+        <input type="text" id="doador" name="doador" required placeholder="Ex: Maria dos Santos">
+        <button type="submit">Cadastrar Livro</button>
+      </form>
+    </section>
     <!-- Sessão de livros disponíveis -->
     <section class="livros-disponiveis">
       <h2>Livros Disponíveis</h2>
-      <div class="livro-card" data-livro="Dom Casmurro" data-autor="Machado de Assis" data-doador="Maria dos Santos">
-        <h3>Dom Casmurro</h3>
-        <p>Autor: Machado de Assis</p>
-        <button class="reservar-btn">Reservar</button>
+      <div id="livros-lista">
+        <!-- Os livros cadastrados aparecem aqui -->
       </div>
-      <div class="livro-card" data-livro="O Pequeno Príncipe" data-autor="Antoine de Saint-Exupéry" data-doador="Carlos Oliveira">
-        <h3>O Pequeno Príncipe</h3>
-        <p>Autor: Antoine de Saint-Exupéry</p>
-        <button class="reservar-btn">Reservar</button>
-      </div>
-      <div class="livro-card" data-livro="Capitães da Areia" data-autor="Jorge Amado" data-doador="Ana Paula Souza">
-        <h3>Capitães da Areia</h3>
-        <p>Autor: Jorge Amado</p>
-        <button class="reservar-btn">Reservar</button>
-      </div>
-      <!-- Adicione mais cards conforme seus livros disponíveis -->
     </section>
     <!-- Card de confirmação para o administrador -->
     <div class="interesse-card" id="interesse-card">
@@ -251,22 +300,70 @@
     </div>
   </div>
   <script>
-    // Abrir modal ao clicar em reservar
-    document.querySelectorAll('.reservar-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const card = btn.closest('.livro-card');
-        document.getElementById('modal-livro').value = card.getAttribute('data-livro');
-        document.getElementById('modal-autor').value = card.getAttribute('data-autor');
-        document.getElementById('modal-doador').value = card.getAttribute('data-doador');
-        document.getElementById('modal-reserva-bg').style.display = 'flex';
+    // Cole aqui o link do seu Google Apps Script:
+    const googleScriptURL = "https://script.google.com/macros/s/SEU_SCRIPT_ID/exec";
+
+    // Lista de livros
+    const livros = [];
+
+    // Função para renderizar livros
+    function renderLivros() {
+      const lista = document.getElementById('livros-lista');
+      lista.innerHTML = '';
+      livros.forEach((livro, idx) => {
+        // Cria o card do livro
+        const card = document.createElement('div');
+        card.className = 'livro-card';
+        card.setAttribute('data-livro', livro.titulo);
+        card.setAttribute('data-autor', livro.autor);
+        card.setAttribute('data-doador', livro.doador);
+        card.innerHTML = `
+          <h3>${livro.titulo}</h3>
+          <p>Autor: ${livro.autor}</p>
+          <button class="reservar-btn" data-idx="${idx}">Reservar</button>
+        `;
+        lista.appendChild(card);
       });
+      // Adiciona evento aos botões de reserva
+      document.querySelectorAll('.reservar-btn').forEach(btn => {
+        btn.onclick = function() {
+          const idx = btn.getAttribute('data-idx');
+          const livro = livros[idx];
+          document.getElementById('modal-livro').value = livro.titulo;
+          document.getElementById('modal-autor').value = livro.autor;
+          document.getElementById('modal-doador').value = livro.doador;
+          document.getElementById('modal-reserva-bg').style.display = 'flex';
+        };
+      });
+    }
+
+    // Cadastro de livro
+    document.getElementById('form-cadastro-livro').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const titulo = document.getElementById('titulo').value.trim();
+      const autor = document.getElementById('autor').value.trim();
+      const doador = document.getElementById('doador').value.trim();
+      if (titulo && autor && doador) {
+        livros.push({titulo, autor, doador});
+        renderLivros();
+        // Envia para Google Sheets via Apps Script
+        fetch(googleScriptURL, {
+          method: 'POST',
+          body: JSON.stringify({titulo, autor, doador}),
+          headers: {'Content-Type': 'application/json'}
+        })
+        .then(() => { alert('Livro cadastrado com sucesso!'); })
+        .catch(() => { alert('Erro ao enviar para a planilha.'); });
+        this.reset();
+      }
     });
 
+    // Fecha modal
     function fecharModal() {
       document.getElementById('modal-reserva-bg').style.display = 'none';
     }
 
-    // Envio da reserva
+    // Reserva de livro
     document.getElementById('form-reserva').addEventListener('submit', function(e) {
       e.preventDefault();
       // Pega valores do formulário
@@ -315,6 +412,9 @@ Equipe Estante Solidária`;
       navigator.clipboard.writeText(corpoEmail)
         .then(() => { alert('Modelo de e-mail copiado!'); });
     }
+
+    // Inicializa lista vazia
+    renderLivros();
   </script>
 </body>
   </html>
