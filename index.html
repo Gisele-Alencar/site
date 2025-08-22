@@ -4,98 +4,426 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estante Solidária</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'" 
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffb6d5;
+      --accent: #ff4f8b;
+      --dark: #555;
+      --gray: #888;
+      --light-gray: #f8f4f8;
+      --white: #fff;
+      --border-radius: 16px;
+      --box-shadow: 0 8px 24px rgba(34,34,34,0.10);
+    }
+    body {
+      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+      background: var(--light-gray);
+      color: var(--dark);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: var(--dark);
+      color: var(--white);
+      padding: 36px 0 28px 0;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      border-bottom-left-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.4em;
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .container {
+      width: 96%;
+      margin: 36px auto 0 auto;
+      max-width: 600px;
+      padding: 0 1em 2em 1em;
+    }
+    .form-container {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .form-container label {
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 1.05em;
+      margin-bottom: 6px;
+    }
+    .form-container input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--gray);
+      background: var(--white);
+      font-size: 1em;
+      font-family: inherit;
+      color: var(--dark);
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-container input:focus {
+      border-color: var(--accent);
+    }
+    .form-container button {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(255, 79, 139, 0.10);
+    }
+    .form-container button:hover {
+      background: #ff3580;
+    }
+    .livros-disponiveis {
+      margin-bottom: 32px;
+    }
+    .livros-disponiveis h2 {
+      font-size: 1.5em;
+      text-align: center;
+      margin-bottom: 18px;
+      color: var(--accent);
+    }
+    .livro-card {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 18px 14px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .livro-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2em;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .livro-card p {
+      margin: 0;
+      font-size: 1em;
+      color: var(--gray);
+    }
+    .livro-card button {
+      margin-top: 10px;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(255, 79, 139, 0.08);
+    }
+    .livro-card button:hover {
+      background: #ff3580;
+    }
+    #modal-reserva-bg {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.2);
+      z-index: 99;
+      justify-content: center;
+      align-items: center;
+    }
+    #modal-reserva {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 32px 24px;
+      max-width: 340px;
+      width: 90vw;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #modal-reserva label {
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 1.05em;
+      margin-bottom: 6px;
+    }
+    #modal-reserva input {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--gray);
+      background: var(--white);
+      font-size: 1em;
+      font-family: inherit;
+      color: var(--dark);
+      outline: none;
+      transition: border 0.2s;
+    }
+    #modal-reserva input:focus {
+      border-color: var(--accent);
+    }
+    #modal-reserva button {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(255, 79, 139, 0.10);
+    }
+    #modal-reserva .fechar {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: transparent;
+      color: var(--dark);
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .interesse-card {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      padding: 16px;
+      max-width: 400px;
+      margin: 20px auto;
+      box-shadow: var(--box-shadow);
+      display: none;
+    }
+    .interesse-card h3 {
+      margin-top: 0;
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      .container {
+        max-width: 98vw;
+        margin-top: 18px;
+        padding: 0 0.5em;
+      }
+      .form-container {
+        padding: 18px 8px;
+      }
+      .livro-card {
+        padding: 12px 6px;
+      }
+      #modal-reserva {
+        padding: 16px 8px;
+      }
+      .interesse-card {
+        padding: 12px;
+        max-width: 98vw;
+      }
+    }
+    @media (min-width: 600px) and (max-width: 900px) {
+      .container {
+        max-width: 90vw;
+      }
+      .livro-card {
+        padding: 14px 8px;
+      }
+      #modal-reserva {
+        padding: 24px 10px;
+      }
+      .interesse-card {
+        padding: 14px;
+        max-width: 80vw;
+      }
+    }
+  </style>
 </head>
-<body class="bg-[#fcf8f9] min-h-screen flex flex-col font-sans">
-
-  <!-- Cabeçalho -->
-  <header class="flex justify-between items-center p-4 border-b border-[#f3e7ea]">
-    <h1 class="text-[#1b0d11] text-xl font-bold">Estante Solidária</h1>
-    <button class="bg-[#f0426d] text-white px-4 py-2 rounded-xl font-bold">Register Book</button>
+<body>
+  <header>
+    <h1>Estante Solidária</h1>
   </header>
-
-  <!-- Formulário de Cadastro -->
-  <section class="flex flex-col items-center py-6 px-4">
-    <h2 class="text-[#1b0d11] text-2xl font-bold mb-4">Register Your Book</h2>
-
-    <div class="flex flex-col gap-3 w-full max-w-md">
-      <input id="titulo" placeholder="Book Title" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
-      <select id="estilo" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none">
-        <option value="">Select Book Style</option>
-        <option value="Fiction">Fiction</option>
-        <option value="Children">Children</option>
-        <option value="Technical">Technical</option>
-        <option value="Mystery">Mystery</option>
-      </select>
-      <input id="doador" placeholder="Donor Name" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
-      <input id="imagem" placeholder="Image URL (optional)" class="rounded-xl p-4 bg-[#f3e7ea] text-[#1b0d11] focus:outline-none" />
-      <button id="cadastrar-btn" class="bg-[#f0426d] text-white rounded-xl py-3 font-bold hover:bg-[#e0325c] transition-colors">Register Book</button>
+  <div class="container">
+    <!-- Formulário para cadastrar livro -->
+    <section class="form-container">
+      <h2>Cadastre o Livro que Deseja Doar</h2>
+      <form id="form-cadastro-livro">
+        <label for="titulo">Título do Livro:</label>
+        <input type="text" id="titulo" name="titulo" required placeholder="Ex: Dom Casmurro">
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required placeholder="Ex: Machado de Assis">
+        <label for="doador">Seu nome (doador):</label>
+        <input type="text" id="doador" name="doador" required placeholder="Ex: Maria dos Santos">
+        <button type="submit">Cadastrar Livro</button>
+      </form>
+    </section>
+    <!-- Sessão de livros disponíveis -->
+    <section class="livros-disponiveis">
+      <h2>Livros Disponíveis</h2>
+      <div id="livros-lista">
+        <!-- Os livros cadastrados aparecem aqui -->
+      </div>
+    </section>
+    <!-- Card de confirmação para o administrador -->
+    <div class="interesse-card" id="interesse-card">
+      <h3>Nova Reserva Recebida</h3>
+      <p><strong>Livro:</strong> <span id="card-livro"></span></p>
+      <p><strong>Autor:</strong> <span id="card-autor"></span></p>
+      <p><strong>Doador:</strong> <span id="card-doador"></span></p>
+      <p><strong>Interessado:</strong> <span id="card-interessado"></span></p>
+      <p><strong>E-mail do interessado:</strong> <span id="card-email"></span></p>
+      <button onclick="copiarEmail()">Copiar modelo de e-mail</button>
     </div>
-  </section>
+  </div>
 
-  <!-- Livros Registrados -->
-  <section class="flex-1 px-4 pb-6">
-    <h2 class="text-[#1b0d11] text-xl font-bold mb-4">Registered Books</h2>
-    <div id="livros-container" class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4"></div>
-  </section>
-
+  <!-- Modal reserva -->
+  <div id="modal-reserva-bg">
+    <div id="modal-reserva">
+      <button class="fechar" onclick="fecharModal()" title="Fechar">&times;</button>
+      <form id="form-reserva">
+        <input type="hidden" id="modal-livro" name="livro">
+        <input type="hidden" id="modal-autor" name="autor">
+        <input type="hidden" id="modal-doador" name="doador">
+        <label for="nome">Seu nome:</label>
+        <input type="text" id="modal-nome" name="nome" required>
+        <label for="email">Seu e-mail:</label>
+        <input type="email" id="modal-email" name="email" required>
+        <button type="submit">Confirmar Reserva</button>
+      </form>
+    </div>
+  </div>
   <script>
+    // Cole aqui o link do seu Google Apps Script:
+    const googleScriptURL = "https://script.google.com/macros/s/SEU_SCRIPT_ID/exec";
+
+    // Lista de livros
     const livros = [];
-    const container = document.getElementById("livros-container");
-    const btnCadastrar = document.getElementById("cadastrar-btn");
 
-    function atualizarLivros() {
-      container.innerHTML = "";
-      livros.forEach((livro, index) => {
-        const livroDiv = document.createElement("div");
-        livroDiv.className = "flex flex-col gap-2";
-
-        livroDiv.innerHTML = `
-          <div class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl" 
-               style='background-image: url("${livro.imagem || "https://via.placeholder.com/150"}")'></div>
-          <div>
-            <p class="text-[#1b0d11] text-base font-medium">${livro.titulo}</p>
-            <p class="text-[#9a4c5f] text-sm">${livro.estilo}</p>
-            <button class="mt-2 w-full bg-[#f0426d] text-white rounded-xl py-1 text-sm font-bold ${livro.reservado ? "opacity-50 cursor-not-allowed" : ""}">
-              ${livro.reservado ? "Reservado" : "Reservar"}
-            </button>
-          </div>
+    // Função para renderizar livros
+    function renderLivros() {
+      const lista = document.getElementById('livros-lista');
+      lista.innerHTML = '';
+      livros.forEach((livro, idx) => {
+        // Cria o card do livro
+        const card = document.createElement('div');
+        card.className = 'livro-card';
+        card.setAttribute('data-livro', livro.titulo);
+        card.setAttribute('data-autor', livro.autor);
+        card.setAttribute('data-doador', livro.doador);
+        card.innerHTML = `
+          <h3>${livro.titulo}</h3>
+          <p>Autor: ${livro.autor}</p>
+          <button class="reservar-btn" data-idx="${idx}">Reservar</button>
         `;
-
-        livroDiv.querySelector("button").addEventListener("click", () => {
-          if (!livro.reservado) {
-            livro.reservado = true;
-            atualizarLivros();
-          }
-        });
-
-        container.appendChild(livroDiv);
+        lista.appendChild(card);
+      });
+      // Adiciona evento aos botões de reserva
+      document.querySelectorAll('.reservar-btn').forEach(btn => {
+        btn.onclick = function() {
+          const idx = btn.getAttribute('data-idx');
+          const livro = livros[idx];
+          document.getElementById('modal-livro').value = livro.titulo;
+          document.getElementById('modal-autor').value = livro.autor;
+          document.getElementById('modal-doador').value = livro.doador;
+          document.getElementById('modal-reserva-bg').style.display = 'flex';
+        };
       });
     }
 
-    btnCadastrar.addEventListener("click", () => {
-      const titulo = document.getElementById("titulo").value.trim();
-      const estilo = document.getElementById("estilo").value;
-      const doador = document.getElementById("doador").value.trim();
-      const imagem = document.getElementById("imagem").value.trim();
-
-      if (titulo && estilo && doador) {
-        livros.push({ titulo, estilo, doador, imagem, reservado: false });
-        document.getElementById("titulo").value = "";
-        document.getElementById("estilo").value = "";
-        document.getElementById("doador").value = "";
-        document.getElementById("imagem").value = "";
-        atualizarLivros();
-      } else {
-        alert("Preencha todos os campos obrigatórios!");
+    // Cadastro de livro
+    document.getElementById('form-cadastro-livro').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const titulo = document.getElementById('titulo').value.trim();
+      const autor = document.getElementById('autor').value.trim();
+      const doador = document.getElementById('doador').value.trim();
+      if (titulo && autor && doador) {
+        livros.push({titulo, autor, doador});
+        renderLivros();
+        // Envia para Google Sheets via Apps Script
+        fetch(googleScriptURL, {
+          method: 'POST',
+          body: JSON.stringify({titulo, autor, doador}),
+          headers: {'Content-Type': 'application/json'}
+        })
+        .then(() => { alert('Livro cadastrado com sucesso!'); })
+        .catch(() => { alert('Erro ao enviar para a planilha.'); });
+        this.reset();
       }
     });
 
-    atualizarLivros();
-  </script>
+    // Fecha modal
+    function fecharModal() {
+      document.getElementById('modal-reserva-bg').style.display = 'none';
+    }
 
+    // Reserva de livro
+    document.getElementById('form-reserva').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Pega valores do formulário
+      const livro = document.getElementById('modal-livro').value;
+      const autor = document.getElementById('modal-autor').value;
+      const doador = document.getElementById('modal-doador').value;
+      const interessado = document.getElementById('modal-nome').value;
+      const email = document.getElementById('modal-email').value;
+
+      // Preenche o card
+      document.getElementById('card-livro').textContent = livro;
+      document.getElementById('card-autor').textContent = autor;
+      document.getElementById('card-doador').textContent = doador;
+      document.getElementById('card-interessado').textContent = interessado;
+      document.getElementById('card-email').textContent = email;
+
+      // Mostra o card
+      document.getElementById('interesse-card').style.display = 'block';
+
+      // Fecha modal
+      fecharModal();
+
+      // Limpa o formulário
+      document.getElementById('form-reserva').reset();
+    });
+
+    // Função para copiar modelo de e-mail
+    function copiarEmail() {
+      const livro = document.getElementById('card-livro').textContent;
+      const autor = document.getElementById('card-autor').textContent;
+      const doador = document.getElementById('card-doador').textContent;
+      const interessado = document.getElementById('card-interessado').textContent;
+      const emailInteressado = document.getElementById('card-email').textContent;
+      const corpoEmail = `Olá ${doador},
+
+Recebemos uma nova reserva para o seu livro "${livro}" (Autor: ${autor}) na Estante Solidária.
+
+Interessado(a): ${interessado}
+E-mail de contato: ${emailInteressado}
+
+Por favor, entre em contato com o interessado para combinar a entrega ou retirada do livro.
+
+Obrigado por ajudar a compartilhar conhecimento!
+Equipe Estante Solidária`;
+
+      navigator.clipboard.writeText(corpoEmail)
+        .then(() => { alert('Modelo de e-mail copiado!'); });
+    }
+
+    // Inicializa lista vazia
+    renderLivros();
+  </script>
 </body>
 </html>
