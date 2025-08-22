@@ -20,7 +20,7 @@
     <h1 class="text-2xl sm:text-3xl font-bold text-pink-900">Estante Solidária</h1>
   </header>
 
-  <!-- Formulário local para testes -->
+  <!-- Formulário local -->
   <main class="flex flex-col w-full max-w-[960px] px-4 sm:px-10 mt-6">
     <h2 class="text-2xl sm:text-3xl font-bold text-pink-900 mb-4">Register Your Book</h2>
 
@@ -48,9 +48,9 @@
     const cadastrarBtn = document.getElementById('cadastrar-btn');
     const livrosContainer = document.getElementById('livros-container');
 
-    let livros = []; // Array local para teste
+    let livros = []; // Array local para testes
 
-    // Função de cadastro manual
+    // Cadastro manual de livros
     cadastrarBtn.addEventListener('click', () => {
       const titulo = document.getElementById('titulo').value.trim();
       const estilo = document.getElementById('estilo').value.trim();
@@ -58,7 +58,7 @@
       const imagem = document.getElementById('imagem').value.trim();
 
       if(titulo && estilo && doador){
-        livros.push({titulo, estilo, doador, imagem});
+        livros.push({titulo, estilo, doador, imagem, reservadoPor: null});
         renderLivros();
 
         document.getElementById('titulo').value = '';
@@ -70,10 +70,12 @@
       }
     });
 
-    // Função para renderizar livros
+    // Renderizar livros
     function renderLivros(){
       livrosContainer.innerHTML = '';
       livros.forEach((livro, idx) => {
+        const reservado = livro.reservadoPor ? true : false;
+
         const card = document.createElement('div');
         card.classList.add('flex','flex-col','gap-2','p-3','bg-white','rounded-xl','shadow-lg','hover:shadow-2xl','transition-shadow');
         card.innerHTML = `
@@ -81,31 +83,30 @@
           <p class="text-pink-900 font-semibold text-base sm:text-lg">${livro.titulo}</p>
           <p class="text-pink-500 text-sm sm:text-base">${livro.estilo}</p>
           <p class="text-pink-500 text-sm sm:text-base">Donor: ${livro.doador}</p>
-          <button class="reservar-btn bg-pink-500 text-white font-bold py-1 px-3 rounded-xl mt-2 hover:scale-105 transition-transform shadow" data-idx="${idx}">
-            Reservar
+          <button class="reservar-btn ${reservado ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-500'} text-white font-bold py-1 px-3 rounded-xl mt-2 hover:scale-105 transition-transform shadow" 
+            data-idx="${idx}" ${reservado ? 'disabled' : ''}>
+            ${reservado ? 'Reservado' : 'Reservar'}
           </button>
         `;
         livrosContainer.appendChild(card);
       });
 
+      // Adicionar evento aos botões de reserva
       document.querySelectorAll('.reservar-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const idx = e.target.dataset.idx;
-          alert(`Livro "${livros[idx].titulo}" reservado!`);
+
+          const nome = prompt("Digite seu nome:");
+          if(!nome) return alert("Reserva cancelada!");
+
+          const email = prompt("Digite seu e-mail:");
+          if(!email) return alert("Reserva cancelada!");
+
+          livros[idx].reservadoPor = { nome, email };
+          renderLivros();
         });
       });
     }
-
-    // ----------------------------
-    // Integração futura com Google Sheets
-    // ----------------------------
-    // Exemplo de fetch futuramente:
-    // fetch("LINK_DO_SEU_WEB_APP_DO_APPS_SCRIPT")
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     livros = data; // Substitui array local pelo JSON do Google Sheets
-    //     renderLivros();
-    //   });
   </script>
 
 </body>
