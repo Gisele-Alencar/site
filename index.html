@@ -4,103 +4,115 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estante Solidária</title>
-  <!-- Google Fonts para visual moderno -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #ffb6d5; /* Rosa claro */
-      --accent: #ff4f8b;  /* Rosa mais forte para botões, detalhes */
-      --dark: #555;       /* Cinza escuro moderno */
-      --gray: #888;       /* Cinza intermediário */
-      --light-gray: #f8f4f8; /* Rosa bem claro para fundo */
-      --white: #fff;
-      --border-radius: 16px;
-      --box-shadow: 0 8px 24px rgba(34,34,34,0.10);
-    }
+    /* ===== CSS movido e consolidado ===== */
     body {
-      font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
-      background: var(--light-gray);
-      color: var(--dark);
       margin: 0;
-      padding: 0;
-      min-height: 100vh;
+      font-size: 3em;
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      background: #f8f4f8;
+      color: #555;
     }
     header {
-      background: var(--dark);
-      color: var(--white);
-      padding: 36px 0 28px 0;
+      background: #555;
+      color: white;
       text-align: center;
-      box-shadow: var(--box-shadow);
-      border-bottom-left-radius: var(--border-radius);
-      border-bottom-right-radius: var(--border-radius);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.4em;
-      letter-spacing: 2px;
-      font-weight: 700;
-      font-family: 'Montserrat', sans-serif;
+      padding: 36px 0;
     }
     .container {
       width: 96%;
-      margin: 36px auto 0 auto;
-      max-width: 600px;
-      padding: 0 1em 2em 1em;
-    header h1 {
-      margin: 0;
-      font-size: 2.4em;
-      letter-spacing: 2px;
-      font-weight: 700;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .container {
-      width: 96%;
-      margin: 36px auto 0 auto;
       max-width: 500px;
-      padding: 0 1em 2em 1em;
+      margin: 36px auto;
     }
     .form-container {
-      background: var(--primary);
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
+      background: #ffb6d5;
+      padding: 20px;
+      border-radius: 16px;
     }
-    label {
-      font-weight: 500;
-      color: var(--dark);
-      font-size: 1.05em;
-      margin-bottom: 6px;
-    }
+    label { display: block; margin: 10px 0 5px; }
     input, select, textarea {
-      padding: 10px 12px;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
       border-radius: 8px;
-      border: 1px solid var(--gray);
-      background: var(--white);
-      font-size: 1em;
-      font-family: inherit;
-      color: var(--dark);
-      outline: none;
-      transition: border 0.2s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
+      border: 1px solid #888;
     }
     button {
-      background: var(--accent);
-      color: var(--white);
+      background: #ff4f8b;
+      color: white;
       border: none;
+      padding: 12px;
       border-radius: 8px;
-      padding: 12px 0;
-      font-size: 1.1em;
-      font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s;
-      box-shadow: 0 4px 12px rgba(255, 79, 139, 0.10);
     }
-    button:hover {
+    button:hover { background: #ff3580; }
+    .book-list {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .book-card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .book-card a { 
+      display: inline-block; 
+      margin-top: 10px; 
+      background: #e91e63; 
+      color: white; 
+      padding: 8px 15px; 
+      border-radius: 5px; 
+      text-decoration: none; 
+    }
+    .book-card a:hover { background: #d81b60; }
+  </style>
+</head>
+<body>
+  <header><h1>Estante Solidária</h1></header>
+  <div class="container">
+    <div class="form-container">
+      <form id="bookForm">
+        <label for="title">Título</label>
+        <input type="text" id="title" required>
+        <label for="category">Categoria</label>
+        <select id="category" required>
+          <option value="Ficção">Ficção</option>
+          <option value="Não Ficção">Não Ficção</option>
+          <option value="Infantil">Infantil</option>
+          <option value="Técnico">Técnico</option>
+        </select>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+    <div class="book-list" id="bookList"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('bookForm');
+    const bookList = document.getElementById('bookList');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const title = form.title.value;
+      const category = form.category.value;
+
+      const card = document.createElement('div');
+      card.className = 'book-card';
+      card.innerHTML = `<h3>${title}</h3><p>${category}</p>`;
+      bookList.appendChild(card);
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>    button:hover {
       background: #ff3580;
     }
     /* Responsividade */
@@ -147,7 +159,7 @@
     </div>
   </div>
 </body>
-</html>      margin: 0;
+<    margin: 0;
       font-size: 3em;
       letter-spacing: 2px;
       font-weight: 700;
