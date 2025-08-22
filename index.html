@@ -1,40 +1,125 @@
-<!DOCTYPE html><html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>hey!</title>
-    <meta name="description" content="Página pessoal minimalista">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E👋%3C/text%3E%3C/svg%3E">
-    <style>
-      :root { --fg:#ffffff; --muted:rgba(255,255,255,0.7); }
-      html,body{ height:100%; }
-      body{
-        margin:0; 
-        background: linear-gradient(135deg, #A8E890, #6DBE45);
-        color:var(--fg); 
-        font: 500 18px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
-        display:grid; place-items:center; letter-spacing:0.2px; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-      }
-      main{ text-align:center; display:flex; flex-direction:column; gap:24px; }
-      nav{ display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
-      a{ color:var(--fg); text-decoration:none; border:1px solid var(--muted); padding:10px 14px; border-radius:999px; font-weight:600; transition:transform .06s ease, background .2s ease, border-color .2s ease; }
-      a:hover{ transform:translateY(-1px); background:rgba(255,255,255,.15); border-color:var(--fg); }
-      footer{ position:fixed; inset:auto 12px 12px auto; color:var(--muted); font-size:12px; }
-      .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }.avatar-container { position: relative; display: inline-block; }
-  .avatar {
-    width: 180px;
-    height: auto;
-    image-rendering: pixelated; /* estilo pixelado */
-  }
-  .bubble {
-    position: absolute;
-    bottom: 10px;
-    right: -20px;
-    background: #fff;
-    color: #e60023;
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 14px;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estante Livre</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      color: #333;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .form-container label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+    .form-container input, .form-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    .form-container button {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+    .form-container button:hover {
+      background-color: #d81b60;
+    }
+    .book-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .book-card {
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .book-card h3 {
+      color: #333;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .book-card p {
+      color: #777;
+      font-size: 1em;
+      margin: 5px 0;
+    }
+    .book-card a {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #e91e63;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    .book-card a:hover {
+      background-color: #d81b60;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Estante Livre</h1>
+  </header>
+  <div class="container">
+    <div class="form-container">
+      <h2>Cadastre seu livro</h2>
+      <form id="bookForm">
+        <label for="title">Título</label>
+        <input type="text" id="title" name="title" required>
+        <label for="category">Categoria</label>
+        <select id="category" name="category" required>
+          <option value="Ficção">Ficção</option>
+          <option value="Não Ficção">Não Ficção</option>
+          <option value="Infantil">Infantil</option>
+          <option value="Técnico">Técnico</option>
+        </select>
+        <label for="condition">Condição</label>
+        <select id="condition" name="condition" required>
+          <option value="Novo    border-radius: 14px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     font-size: 18px;
   }
