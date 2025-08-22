@@ -8,13 +8,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff4f8b; /* Rosa moderno */
-      --dark: #222;
-      --gray: #444;
-      --light-gray: #ececec;
+      --primary: #ffb6d5; /* Rosa claro */
+      --accent: #ff4f8b;  /* Rosa mais forte para botões, detalhes */
+      --dark: #555;       /* Cinza escuro moderno */
+      --gray: #888;       /* Cinza intermediário */
+      --light-gray: #f8f4f8; /* Rosa bem claro para fundo */
       --white: #fff;
-      --border-radius: 14px;
-      --box-shadow: 0 8px 24px rgba(34,34,34,0.12);
+      --border-radius: 16px;
+      --box-shadow: 0 8px 24px rgba(34,34,34,0.10);
     }
     body {
       font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
@@ -25,7 +26,7 @@
       min-height: 100vh;
     }
     header {
-      background-color: var(--dark);
+      background: var(--dark);
       color: var(--white);
       padding: 36px 0 28px 0;
       text-align: center;
@@ -35,6 +36,106 @@
     }
     header h1 {
       margin: 0;
+      font-size: 2.4em;
+      letter-spacing: 2px;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .container {
+      width: 96%;
+      margin: 36px auto 0 auto;
+      max-width: 500px;
+      padding: 0 1em 2em 1em;
+    }
+    .form-container {
+      background: var(--primary);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    label {
+      font-weight: 500;
+      color: var(--dark);
+      font-size: 1.05em;
+      margin-bottom: 6px;
+    }
+    input, select, textarea {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--gray);
+      background: var(--white);
+      font-size: 1em;
+      font-family: inherit;
+      color: var(--dark);
+      outline: none;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    button {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 4px 12px rgba(255, 79, 139, 0.10);
+    }
+    button:hover {
+      background: #ff3580;
+    }
+    /* Responsividade */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5em;
+      }
+      .container {
+        max-width: 98vw;
+        margin-top: 18px;
+        padding: 0 0.5em;
+      }
+      .form-container {
+        padding: 18px 8px;
+      }
+    }
+    @media (min-width: 600px) and (max-width: 900px) {
+      .container {
+        max-width: 90vw;
+      }
+      .form-container {
+        padding: 24px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Estante Solidária</h1>
+  </header>
+  <div class="container">
+    <div class="form-container">
+      <form>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <label for="livro">Livro que deseja doar:</label>
+        <input type="text" id="livro" name="livro" required>
+        <label for="contato">Contato:</label>
+        <input type="text" id="contato" name="contato">
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="3"></textarea>
+        <button type="submit">Doar</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>      margin: 0;
       font-size: 3em;
       letter-spacing: 2px;
       font-weight: 700;
