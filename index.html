@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estante Livre</title>
+  <title>Estante solidária</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'nautilus', sans-serif;
       background-color: #f4f4f4;
       margin: 0;
       padding: 0;
@@ -119,27 +119,50 @@
         </select>
         <label for="condition">Condição</label>
         <select id="condition" name="condition" required>
-          <option value="Novo    border-radius: 14px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    font-size: 18px;
-  }
-</style>
+          <option value="Novo">Novo</option>
+          <option value="Usado">Usado</option>
+        </select>
+        <label for="city">Cidade</label>
+        <input type="text" id="city" name="city" required>
+        <label for="state">Estado</label>
+        <input type="text" id="state" name="state" required>
+        <label for="contact">Contato (WhatsApp ou E-mail)</label>
+        <input type="text" id="contact" name="contact" required>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
+    <div class="book-list" id="bookList">
+      <!-- Cards de livros serão inseridos aqui -->
+    </div>
+  </div>
+  <script>
+    const form = document.getElementById('bookForm');
+    const bookList = document.getElementById('bookList');
 
-  </head>
-  <body>
-    <a class="sr-only" href="#links">Pular para os links</a>
-    <main>
-      <div class="avatar-container">
-        <img src="avatar.png" alt="meu avatar" class="avatar">
-        <span class="bubble">ei!</span>
-      </div><nav id="links" aria-label="redes sociais">
-    <a href="https://instagram.com/seuusuario" target="_blank">Instagram</a>
-    <a href="https://linkedin.com/in/seuusuario" target="_blank">LinkedIn</a>
-    <a href="https://github.com/seuusuario" target="_blank">Github</a>
-    <a href="https://figma.com/@seuusuario" target="_blank">Figma</a>
-  </nav>
-</main>
-<footer>feito com ♥</footer>
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
 
-  </body>
+      const title = form.title.value;
+      const category = form.category.value;
+      const condition = form.condition.value;
+      const city = form.city.value;
+      const state = form.state.value;
+      const contact = form.contact.value;
+
+      const bookCard = document.createElement('div');
+      bookCard.classList.add('book-card');
+      bookCard.innerHTML = `
+        <h3>${title}</h3>
+        <p><strong>Categoria:</strong> ${category}</p>
+        <p><strong>Condição:</strong> ${condition}</p>
+        <p><strong>Local:</strong> ${city} / ${state}</p>
+        <a href="https://wa.me/${contact}" target="_blank">Contato</a>
+      `;
+
+      bookList.appendChild(bookCard);
+
+      form.reset();
+    });
+  </script>
+</body>
 </html>
